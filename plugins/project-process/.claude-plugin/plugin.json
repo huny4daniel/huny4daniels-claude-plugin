@@ -1,6 +1,6 @@
 {
   "name": "project-process",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "기존 프로젝트에 표준 모노레포 템플릿(huny4daniel/huny4daniels-TEMPLATE)의 구조와 진행 절차를 도입하는 명령",
   "author": {
     "name": "huny4daniel"

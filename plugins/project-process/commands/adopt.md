@@ -5,7 +5,7 @@ argument-hint: [템플릿 경로, 생략 시 GitHub 템플릿 저장소 사용]
 
 템플릿: $ARGUMENTS
 
-현재 폴더에 템플릿(huny4daniel/huny4daniels-TEMPLATE)의 구조와 진행 체계를 적용한다. 템플릿의 docs/PROCESS.md 협업 규칙을 따르고, 응답은 [질문] / [제안] / [승인 요청] / [요청] 중 하나로 끝낸다.
+현재 폴더에 템플릿(huny4daniel/huny4daniels-TEMPLATE)의 구조와 진행 체계를 적용한다. 템플릿의 .claude/process/PROCESS.md 협업 규칙을 따르고, 응답은 [질문] / [제안] / [승인 요청] / [요청] 중 하나로 끝낸다.
 
 ## 0. 준비
 
@@ -17,7 +17,7 @@ argument-hint: [템플릿 경로, 생략 시 GitHub 템플릿 저장소 사용]
   date=<오늘 YYYY-MM-DD>
   ```
 - 현재 폴더 상태를 확인해 **모드**를 정한다:
-  - **업데이트 모드**: `.template-version`이 있거나, `docs/PROCESS.md`와 `docs/STATUS.md`가 함께 있다 (이미 템플릿이 적용됨).
+  - **업데이트 모드**: `.template-version`이 있거나, `docs/STATUS.md`와 함께 `.claude/process/PROCESS.md`(또는 예전 위치 `docs/PROCESS.md`)가 있다 (이미 템플릿이 적용됨).
   - **새 프로젝트 모드**: git 저장소가 아니거나 커밋이 없고, 소스 코드·빌드 설정 파일이 없다 (README, LICENSE, .gitignore, .git 정도만 있는 것은 빈 폴더로 본다).
   - **도입 모드**: 그 외 (코드나 커밋 이력이 있다).
 - 판단 근거와 모드를 한 줄로 알리고 진행한다. 애매하면 [질문]한다.
@@ -41,9 +41,9 @@ argument-hint: [템플릿 경로, 생략 시 GitHub 템플릿 저장소 사용]
    - 작업 브랜치(`docs/adopt-process`)를 만들어 진행할 것을 제안한다.
 2. **현황 파악** — README, 기존 CLAUDE.md/AGENTS.md, 빌드 설정, CI·릴리즈 워크플로, 폴더 구조, 최근 git 이력, 열린 GitHub 이슈를 읽고 한 화면으로 요약한다.
 3. **비침습 추가** — 아래 원칙으로 추가·병합할 목록을 보여주고 [승인 요청]한 뒤 적용한다.
-   - 없는 파일만 복사: AGENTS.md, docs/ 전체, `.claude/commands/`, `.claude/hooks/`, `.githooks/`, `.github/ISSUE_TEMPLATE/`, `.github/pull_request_template.md`, CHANGELOG.md, CONTRIBUTING.md, .editorconfig, .env.example
+   - 없는 파일만 복사: AGENTS.md, `docs/`(SPEC.md·STATUS.md·README.md·adr/·plans/ 등), `.claude/process/`, `.claude/templates/`, `.claude/commands/`, `.claude/hooks/`, `.githooks/`, `.github/ISSUE_TEMPLATE/`, `.github/pull_request_template.md`, CHANGELOG.md, CONTRIBUTING.md, .editorconfig, .env.example
    - 기존 파일은 덮어쓰지 않고 병합:
-     - CLAUDE.md: 기존 내용 유지 + 템플릿 CLAUDE.md의 import(`@AGENTS.md`, `@docs/PROCESS.md`, `@docs/STATUS.md`)와 진행 규칙 추가. 이미 있는 import는 중복으로 넣지 않는다. 기존 CLAUDE.md의 프로젝트 정보 중 AGENTS.md 성격(구조, 명령어, 규칙)인 것은 AGENTS.md로 옮길지 [제안]한다.
+     - CLAUDE.md: 기존 내용 유지 + 템플릿 CLAUDE.md의 import(`@AGENTS.md`, `@.claude/process/PROCESS.md`, `@docs/STATUS.md`)와 진행 규칙 추가. 이미 있는 import는 중복으로 넣지 않는다. 기존 CLAUDE.md의 프로젝트 정보 중 AGENTS.md 성격(구조, 명령어, 규칙)인 것은 AGENTS.md로 옮길지 [제안]한다.
      - AGENTS.md가 이미 있으면 템플릿 항목 중 빠진 섹션만 추가한다.
      - git 훅: 프로젝트에 `core.hooksPath`나 husky·lefthook 같은 훅 도구가 없으면 `git config core.hooksPath .githooks`를 켤지 [질문]한다. 있으면 덮어쓰지 않고, 기존 훅에서 `.githooks/pre-commit`·`pre-push`를 호출하는 방법을 [제안]한다.
      - .gitignore·.gitattributes: 빠진 항목만. `.claude/settings.json`: 권한과 `hooks`를 합친다 (기존 훅은 유지하고 템플릿의 PreToolUse·PostToolUse·Stop 훅을 추가). 프로젝트의 기본 브랜치가 main/master가 아니면 그 사실을 알린다.
@@ -61,7 +61,7 @@ argument-hint: [템플릿 경로, 생략 시 GitHub 템플릿 저장소 사용]
 
 ## C. 업데이트 모드
 
-**받은 최신 템플릿의 `docs/process/template-update.md`를 읽고 그 절차와 파일 소유 구분을 따른다** (프로젝트에 있는 예전 버전이 아니라 최신 템플릿의 문서가 기준). 요약:
+**받은 최신 템플릿의 `.claude/process/template-update.md`를 읽고 그 절차와 파일 소유 구분을 따른다** (프로젝트에 있는 예전 버전이 아니라 최신 템플릿의 문서가 기준). 요약:
 
 1. 커밋되지 않은 변경이 있으면 먼저 정리할지 [질문]한다. `.template-version`의 커밋(기준)과 최신 커밋이 같으면 "이미 최신"이라고 알리고 끝낸다.
 2. 템플릿에서 기준 이후 바뀐 파일을 구해 템플릿 소유 / 프로젝트 소유로 나눈다.
