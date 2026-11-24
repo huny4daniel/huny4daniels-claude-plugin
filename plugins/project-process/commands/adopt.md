@@ -25,7 +25,7 @@ argument-hint: [템플릿 경로, 생략 시 GitHub 템플릿 저장소 사용]
 ## A. 새 프로젝트 모드
 
 1. 프로젝트 이름을 [질문]한다 (기본값: 현재 폴더 이름).
-2. 템플릿의 `.git`과 `tools/scripts/new-project.ps1`을 제외한 모든 파일·폴더를 복사한다. 이미 있는 파일(README, LICENSE, .gitignore 등)은 덮어쓰지 않고:
+2. 템플릿의 `.git`과 템플릿 전용 파일(`tools/scripts/new-project.ps1`, `.github/README.md`, `.github/ROADMAP.md` — 최신 목록은 템플릿의 `docs/process/template-update.md` "제외" 행)을 제외한 모든 파일·폴더를 복사한다. 이미 있는 파일(README, LICENSE, .gitignore 등)은 덮어쓰지 않고:
    - README: 기존 내용을 템플릿 README 형식으로 옮겨 합친다.
    - .gitignore: 빠진 항목만 추가한다.
    - LICENSE: 그대로 둔다.
