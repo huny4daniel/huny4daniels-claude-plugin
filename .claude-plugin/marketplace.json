@@ -1,0 +1,15 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "huny4daniels",
+  "description": "개인 프로젝트 진행 절차용 Claude Code 플러그인",
+  "owner": {
+    "name": "huny4daniel"
+  },
+  "plugins": [
+    {
+      "name": "project-process",
+      "description": "기존 프로젝트에 표준 모노레포 템플릿의 구조와 진행 절차를 도입하는 명령",
+      "source": "./plugins/project-process"
+    }
+  ]
+}
