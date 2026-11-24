@@ -41,10 +41,11 @@ argument-hint: [템플릿 경로, 생략 시 GitHub 템플릿 저장소 사용]
    - 작업 브랜치(`docs/adopt-process`)를 만들어 진행할 것을 제안한다.
 2. **현황 파악** — README, 기존 CLAUDE.md/AGENTS.md, 빌드 설정, CI·릴리즈 워크플로, 폴더 구조, 최근 git 이력, 열린 GitHub 이슈를 읽고 한 화면으로 요약한다.
 3. **비침습 추가** — 아래 원칙으로 추가·병합할 목록을 보여주고 [승인 요청]한 뒤 적용한다.
-   - 없는 파일만 복사: AGENTS.md, docs/ 전체, `.claude/commands/`, `.claude/hooks/`, `.github/ISSUE_TEMPLATE/`, `.github/pull_request_template.md`, CHANGELOG.md, CONTRIBUTING.md, .editorconfig, .env.example
+   - 없는 파일만 복사: AGENTS.md, docs/ 전체, `.claude/commands/`, `.claude/hooks/`, `.githooks/`, `.github/ISSUE_TEMPLATE/`, `.github/pull_request_template.md`, CHANGELOG.md, CONTRIBUTING.md, .editorconfig, .env.example
    - 기존 파일은 덮어쓰지 않고 병합:
      - CLAUDE.md: 기존 내용 유지 + 템플릿 CLAUDE.md의 import(`@AGENTS.md`, `@docs/PROCESS.md`, `@docs/STATUS.md`)와 진행 규칙 추가. 이미 있는 import는 중복으로 넣지 않는다. 기존 CLAUDE.md의 프로젝트 정보 중 AGENTS.md 성격(구조, 명령어, 규칙)인 것은 AGENTS.md로 옮길지 [제안]한다.
      - AGENTS.md가 이미 있으면 템플릿 항목 중 빠진 섹션만 추가한다.
+     - git 훅: 프로젝트에 `core.hooksPath`나 husky·lefthook 같은 훅 도구가 없으면 `git config core.hooksPath .githooks`를 켤지 [질문]한다. 있으면 덮어쓰지 않고, 기존 훅에서 `.githooks/pre-commit`·`pre-push`를 호출하는 방법을 [제안]한다.
      - .gitignore·.gitattributes: 빠진 항목만. `.claude/settings.json`: 권한과 `hooks`를 합친다 (기존 훅은 유지하고 템플릿의 PreToolUse·PostToolUse·Stop 훅을 추가). 프로젝트의 기본 브랜치가 main/master가 아니면 그 사실을 알린다.
    - 건드리지 않음: 소스 코드, 빌드 설정, 기존 CI·release 워크플로, README 본문
    - `apps/`, `packages/`, `tools/` 폴더는 만들지 않는다. 코드 이동은 하지 않는다.
