@@ -4,7 +4,7 @@
 
 | 플러그인 | 명령 | 용도 |
 |---|---|---|
-| project-process | `/adopt [템플릿 경로]` | [huny4daniels-TEMPLATE](https://github.com/huny4daniel/huny4daniels-TEMPLATE)의 구조와 진행 절차를 현재 폴더에 적용. 빈 폴더면 새 프로젝트로 시작(`/kickoff`로 이어짐), 기존 프로젝트면 덮어쓰지 않고 단계적으로 도입 |
+| project-process | `/adopt [템플릿 경로]` | [huny4daniels-TEMPLATE](https://github.com/huny4daniel/huny4daniels-TEMPLATE)의 구조와 진행 절차를 현재 폴더에 적용. 빈 폴더면 새 프로젝트로 시작(`/kickoff`로 이어짐), 기존 프로젝트면 덮어쓰지 않고 단계적으로 도입, 이미 적용된 프로젝트면 템플릿 업데이트 반영(`.template-version` 기준) |
 
 템플릿 자체(폴더 구조·문서·프로젝트 명령)는 템플릿 저장소에만 둔다. 이 플러그인은 그것을 가져와 적용하는 명령만 담는다.
 
