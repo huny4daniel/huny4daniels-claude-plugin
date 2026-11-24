@@ -38,11 +38,12 @@ argument-hint: [템플릿 경로, 생략 시 GitHub 템플릿 저장소 사용]
    - 기존 파일은 덮어쓰지 않고 병합:
      - CLAUDE.md: 기존 내용 유지 + 템플릿 CLAUDE.md의 import(`@AGENTS.md`, `@docs/PROCESS.md`, `@docs/STATUS.md`)와 진행 규칙 추가. 기존 CLAUDE.md의 프로젝트 정보 중 AGENTS.md 성격(구조, 명령어, 규칙)인 것은 AGENTS.md로 옮길지 [제안]한다.
      - AGENTS.md가 이미 있으면 템플릿 항목 중 빠진 섹션만 추가한다.
-     - .gitignore·.gitattributes: 빠진 항목만. `.claude/settings.json`: 권한과 `hooks`를 합친다 (기존 훅은 유지하고 템플릿의 PreToolUse 훅을 추가). 프로젝트의 기본 브랜치가 main/master가 아니면 그 사실을 알린다.
+     - .gitignore·.gitattributes: 빠진 항목만. `.claude/settings.json`: 권한과 `hooks`를 합친다 (기존 훅은 유지하고 템플릿의 PreToolUse·PostToolUse·Stop 훅을 추가). 프로젝트의 기본 브랜치가 main/master가 아니면 그 사실을 알린다.
    - 건드리지 않음: 소스 코드, 빌드 설정, 기존 CI·release 워크플로, README 본문
    - `apps/`, `packages/`, `tools/` 폴더는 만들지 않는다. 코드 이동은 하지 않는다.
 4. **역방향 문서화** — 코드를 근거로 초안을 쓰고 문서마다 확인을 받는다.
-   - AGENTS.md: 실제 스택·명령어(설치, 실행, 테스트, 빌드)를 채운다. 명령은 실제로 실행해 확인한다.
+   - AGENTS.md: 실제 스택·명령어(설치, 실행, 테스트, 빌드)를 채운다. 명령은 실제로 실행해 확인한다. 기존 코드에서 읽히는 아키텍처 제약(의존 방향, 계층 규칙)과 코딩 컨벤션(린터가 못 잡는 것만)을 한 줄씩 초안으로 쓰고 확인받는다.
+   - `.claude/hooks/checks.env`: 프로젝트에 이미 있는 포매터·린터·타입 체크·테스트 명령으로 채운다. 기존 테스트가 실패 중이거나 오래 걸리면 `TEST_CMD`를 비워 두고 그 사실을 [질문]한다 (매 응답마다 막히지 않게).
    - docs/architecture/overview.md: 현재 구조와 주요 흐름
    - docs/adr/: 이미 내린 주요 결정을 사후 기록(맥락에 "사후 기록" 명시). 대상 목록을 먼저 보여주고 고르게 한다.
    - docs/product/PRD.md: 현재 기능 목록 중심. 목표·비목표는 [질문]으로 확인한다.
