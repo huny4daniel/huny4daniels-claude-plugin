@@ -5,22 +5,23 @@ argument-hint: [템플릿 경로, 생략 시 GitHub 템플릿 저장소 사용]
 
 템플릿: $ARGUMENTS
 
-현재 폴더에 템플릿(huny4daniel/huny4daniels-TEMPLATE)의 구조와 진행 체계를 적용한다. 템플릿의 .claude/process/PROCESS.md 협업 규칙을 따르고, 응답은 [질문] / [제안] / [승인 요청] / [요청] 중 하나로 끝낸다.
+현재 폴더에 템플릿(기본 huny4daniel/huny4daniels-TEMPLATE, 이미 적용된 프로젝트는 `.template-version`의 `repo=`)의 구조와 진행 체계를 적용한다. 템플릿의 .claude/process/PROCESS.md 협업 규칙을 따르고, 응답은 [질문] / [제안] / [승인 요청] / [요청] 중 하나로 끝낸다.
 
 ## 0. 준비
 
-- 템플릿 경로가 없으면 `git clone https://github.com/huny4daniel/huny4daniels-TEMPLATE.git`으로 현재 폴더 밖의 임시 폴더에 받는다 (전체 이력 포함 — 업데이트 모드에서 버전 비교에 필요). clone이 실패하면 네트워크와 git 설치 여부를 확인하도록 [요청]한다 (공개 저장소라 GitHub 로그인은 필요 없다).
-- 받은 템플릿의 최신 커밋 SHA를 기억해 둔다 (`git -C <템플릿> rev-parse HEAD`). 끝날 때 `.template-version`에 기록한다:
-  ```
-  repo=huny4daniel/huny4daniels-TEMPLATE
-  commit=<SHA>
-  date=<오늘 YYYY-MM-DD>
-  ```
-- 현재 폴더 상태를 확인해 **모드**를 정한다:
+- 먼저 현재 폴더 상태를 확인해 **모드**를 정한다 (받을 템플릿 저장소가 모드에 따라 다르다):
   - **업데이트 모드**: `.template-version`이 있거나, `docs/STATUS.md`와 함께 `.claude/process/PROCESS.md`(또는 예전 위치 `docs/PROCESS.md`)가 있다 (이미 템플릿이 적용됨).
   - **새 프로젝트 모드**: git 저장소가 아니거나 커밋이 없고, 소스 코드·빌드 설정 파일이 없다 (README, LICENSE, .gitignore, .git 정도만 있는 것은 빈 폴더로 본다).
   - **도입 모드**: 그 외 (코드나 커밋 이력이 있다).
 - 판단 근거와 모드를 한 줄로 알리고 진행한다. 애매하면 [질문]한다.
+- **템플릿 저장소** `<repo>`를 정한다: 인자로 템플릿 경로를 받았으면 그 폴더를 쓰고 `<repo>`는 그 폴더의 `origin`(`github.com/<owner>/<name>`)에서 읽는다. 업데이트 모드에서 `.template-version`에 `repo=`가 있으면 그 값 — 포크한 템플릿으로 만든 프로젝트는 포크에서 업데이트를 받는다. 그 외에는 `huny4daniel/huny4daniels-TEMPLATE`.
+- 템플릿 경로가 없으면 `git clone https://github.com/<repo>.git`으로 현재 폴더 밖의 임시 폴더에 받는다 (전체 이력 포함 — 업데이트 모드에서 버전 비교에 필요). clone이 실패하면 저장소 주소, 네트워크, git 설치 여부를 확인하도록 [요청]한다 (공개 저장소라 GitHub 로그인은 필요 없다).
+- 받은 템플릿의 최신 커밋 SHA를 기억해 둔다 (`git -C <템플릿> rev-parse HEAD`). 끝날 때 `.template-version`에 기록한다:
+  ```
+  repo=<repo>
+  commit=<SHA>
+  date=<오늘 YYYY-MM-DD>
+  ```
 
 ## A. 새 프로젝트 모드
 
@@ -55,9 +56,11 @@ argument-hint: [템플릿 경로, 생략 시 GitHub 템플릿 저장소 사용]
    - `.claude/hooks/checks.env`: 프로젝트에 이미 있는 포매터·린터·타입 체크·테스트 명령으로 채운다. 기존 테스트가 실패 중이거나 오래 걸리면 `TEST_CMD`를 비워 두고 그 사실을 [질문]한다 (매 응답마다 막히지 않게).
    - docs/architecture/overview.md: 현재 구조와 주요 흐름
    - docs/adr/: 이미 내린 주요 결정을 사후 기록(맥락에 "사후 기록" 명시). 대상 목록을 먼저 보여주고 고르게 한다.
-   - docs/SPEC.md: 코드에서 읽히는 기능을 소절로, 동작을 Given-When-Then 시나리오로 적되 모두 `[제안]`으로 둔다(코드가 그렇게 동작한다고 의도한 동작이라는 보장은 없다). 목표·비목표와 `[제안]` 확인은 [질문]으로 받는다. 이미 테스트가 있는 기능은 상태 `Done` 후보로 표시하고, 테스트에 시나리오 ID를 붙이는 일은 별도 작업으로 [제안]한다. 기존 PRD·SPEC 문서가 있으면 내용을 옮기고 기존 ID를 그대로 쓴다.
+   - docs/SPEC.md: 코드에서 읽히는 기능을 소절로, 동작을 Given-When-Then 시나리오로 적되 모두 `[제안]`으로 둔다(코드가 그렇게 동작한다고 의도한 동작이라는 보장은 없다). 목표·비목표와 `[제안]` 확인은 [질문]으로 받는다. 이미 테스트가 있는 기능은 상태 `In Progress`로 둔다(시험에 ID가 붙기 전엔 `Done`의 근거가 없다). 기존 PRD·SPEC 문서가 있으면 내용을 옮기고 기존 ID를 그대로 쓴다.
+   - `.claude/hooks/checks.env`의 `SPEC_TEST_GLOB`: 테스트가 있으면 그 위치로 바로 채운다. 비워 두면 spec 커버리지 검사가 꺼진 채 지나간다.
+   - **첫 작업으로 "기존 시험에 시나리오 ID 붙이기"를 만든다**: 템플릿의 `.claude/process/adopt.md` "첫 작업"을 따른다 — `spec-coverage.sh --summary`의 "시험 없음" 목록을 기준으로 시험 이름 앞에 ID(`f03_2_…`, 어려우면 주석 `// F-03.2`)를 붙이고, 기능의 자동 시나리오가 모두 이어지면 `Done`으로 바꾼다. `[chore]` 이슈 하나로 만들어 STATUS.md 다음 할 일에 둔다.
 5. **현재 위치 결정** — docs/STATUS.md에 단계·모드를 제안해 [승인 요청]한다. 0~2단계는 역방향 문서로 완료 처리하고, 열린 이슈가 대부분 버그면 유지보수 모드, 계획된 기능이 있으면 개발 모드(3 또는 4단계)로 둔다. 도입 내용을 세션 로그와 결정 기록에 남긴다.
-6. **마무리** — 변경 요약을 보여주고 커밋을 [승인 요청]한다. 폴더 구조 변경은 필요해질 때 ADR과 함께 별도 작업으로 하자고 안내한다. 임시 템플릿 폴더를 삭제한다.
+6. **마무리** — 변경 요약을 보여주고 `docs/adopt-process` 브랜치에 커밋한 뒤 PR을 만든다. `main` 병합은 [승인 요청]한다(템플릿 `.claude/process/git-flow.md` "이력 원칙": 원격 `main`에는 PR 하나 = 커밋 하나). 폴더 구조 변경은 필요해질 때 ADR과 함께 별도 작업으로 하자고 안내한다. 임시 템플릿 폴더를 삭제한다.
 
 ## C. 업데이트 모드
 
