@@ -9,7 +9,7 @@ argument-hint: [템플릿 경로, 생략 시 GitHub 템플릿 저장소 사용]
 
 ## 0. 준비
 
-- 템플릿 경로가 없으면 `gh repo clone huny4daniel/huny4daniels-TEMPLATE`로 현재 폴더 밖의 임시 폴더에 받는다 (전체 이력 포함 — 업데이트 모드에서 버전 비교에 필요). clone이 실패하면 `gh auth login` 여부를 확인하도록 [요청]한다.
+- 템플릿 경로가 없으면 `git clone https://github.com/huny4daniel/huny4daniels-TEMPLATE.git`으로 현재 폴더 밖의 임시 폴더에 받는다 (전체 이력 포함 — 업데이트 모드에서 버전 비교에 필요). clone이 실패하면 네트워크와 git 설치 여부를 확인하도록 [요청]한다 (공개 저장소라 GitHub 로그인은 필요 없다).
 - 받은 템플릿의 최신 커밋 SHA를 기억해 둔다 (`git -C <템플릿> rev-parse HEAD`). 끝날 때 `.template-version`에 기록한다:
   ```
   repo=huny4daniel/huny4daniels-TEMPLATE

@@ -10,7 +10,7 @@
 
 ## 설치 (컴퓨터마다 한 번)
 
-비공개 저장소이므로 그 컴퓨터에서 GitHub 인증(`gh auth login`)이 되어 있어야 한다.
+공개 저장소라 GitHub 로그인 없이 설치할 수 있다.
 
 ```
 /plugin marketplace add huny4daniel/huny4daniels-claude-plugin
